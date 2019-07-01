@@ -1,0 +1,311 @@
+md-toolbar {
+    padding-top: 50px;
+    padding-bottom: 25px;
+    padding-right: 20px;
+    padding-left: 10px;
+    z-index: 0;
+}
+
+div.toolbar-content {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+div.toolbar-content .md-fab {
+    position: fixed;
+    left: 30px;
+    top: 65px;
+}
+
+div.toolbar-content .md-fab svg {
+    margin-top: 17px;
+}
+
+div.fab-button {
+    background-color: #f06292;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 55px;
+    height: 50px;
+    border-top-right-radius: 10rem;
+    border-bottom-right-radius: 10rem;
+    transition: all .2s;
+}
+
+div.fab-button div.button {
+    align-items: center;
+    text-align: center;
+}
+
+div.fab-button svg {
+    fill: #fff;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    margin-left: -10px;
+    transition: all .2s;
+}
+
+div.fab-button pre {
+    color: #fff;
+    width: 0;
+    opacity: 0;
+    transition: all .2s;
+}
+
+div.fab-button:not(.open):hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    width: 220px;
+    box-shadow: 0 3px 6px rgba(6, 74, 203, .3);
+    transition: all .2s;
+}
+
+div.fab-button:not(.open):hover svg {
+    width: 40px;
+    height: 40px;
+    transition: all .2s;
+}
+
+div.fab-button:not(.open):hover pre {
+    width: 100%;
+    opacity: 1;
+    transition: all .2s;
+}
+
+div.fab-button.open {
+    width: 250vw;
+    height: 250vw;
+    bottom: -50vw;
+    left: -50vw;
+    border-radius: 50%;
+    background-color: #3f51b5;
+    transition: all .5s;
+}
+
+div.fab-button div.form {
+    position: fixed;
+    top: 100vh;
+    bottom: 0;
+    left: 10vw;
+    right: 10vw;
+    width: 80vw;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    background-color: #fff;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, .4);
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    overflow-y: auto;
+    transition: all .3s;
+}
+
+div.fab-button:not(.open) div.form {
+    opacity: 0;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    transition: all .3s;
+}
+
+div.fab-button.open div.form.show {
+    opacity: 1;
+    z-index: 2;
+    pointer-events: all;
+    top: 15vh;
+    transition: all .5s;
+}
+
+div.close-button {
+    position: absolute;
+    top: -0px;
+    left: 0vw;
+    z-index: 1;
+}
+
+div.flex.nowrap.main {
+    padding: 0 50px;
+}
+
+div.flex.nowrap.main div.image {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid rgba(0, 0, 0, .1);
+    margin: 10px;
+}
+
+div.flex.nowrap.main div.image img {
+    cursor: pointer;
+    width: 350px;
+    height: 350px;
+    border: none;
+}
+
+div.flex.nowrap.main div.image h4,
+div.flex.nowrap.main div.image p {
+    margin: 10px 20px;
+}
+
+div.flex.nowrap.main div.image h4 {
+    margin-top: 20px;
+}
+
+div.flex.sub {
+    padding: 0 25px;
+    flex-wrap: wrap-reverse;
+}
+
+div.flex.sub div.add {
+    width: 250px;
+    height: 250px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    margin: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.flex.sub div.add svg {
+    width: 32px;
+    height: 32px;
+    fill: #000;
+    margin-right: -10px;
+    margin-bottom: 10px;
+}
+
+div.flex.sub img {
+    margin: 10px;
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+}
+
+div.flex.column md-input-container,
+md-chips {
+    width: 500px;
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+md-input-container span {
+    color: #555;
+    font-size: .8rem;
+}
+
+div.flex.options {
+    border: 1px solid rgba(0, 0, 0, .1);
+    padding: 10px 20px;
+    margin: 10px;
+    margin-bottom: 20px;
+    border-radius: .4rem;
+    height: 100%;
+}
+
+div.flex.options span.name {
+    position: absolute;
+    margin-top: -22.5px;
+    margin-right: 10px;
+    padding: 0 10px;
+    background-color: #fff;
+}
+
+div.flex.options div.border {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+div.flex.options div.border * {
+    padding: 5px;
+    border-left: 1px solid rgba(0, 0, 0, .1);
+}
+
+div.flex.options div.border p {
+    margin: 0;
+    width: 100%;
+}
+
+div.flex.options div.border svg {
+    width: 24px;
+    height: 24px;
+    fill: #000;
+    cursor: pointer;
+}
+
+div.flex.options div.border:last-child {
+    border-bottom: none;
+}
+
+div.flex.options div.border *:last-child {
+    border-left: none;
+}
+
+div.flex.option {
+    align-content: center;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .1);
+    padding: 10px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    border-radius: .4rem;
+}
+
+div.flex.option span {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+div.chip {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 1rem;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+div.products {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 5vw;
+}
+
+md-card {
+    max-width: 320px;
+    min-width: 320px;
+    min-height: 400px;
+}
+
+md-card img {
+    max-width: 300px;
+    min-height: 300px;
+    padding: 10px;
+}
+
+md-card p span {
+    color: #3f51b5;
+}
+
+md-card-actions {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    padding-top: 10px;
+}
+
+div.filter-options {
+    background-color: #fff;
+    padding: 1vh 7vw;
+    padding-top: 1.7vh;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+div.filter-options md-input-container {
+    min-width: 300px;
+    margin: 0 10px;
+    margin-bottom: -10px;
+    z-index: 0;
+}

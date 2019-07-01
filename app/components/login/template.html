@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="./components/login/style.css">
+<img src="./assets/login-logo.png" alt="Logo" class="logo">
+<div class="flex nowrap">
+    <div class="form">
+        <div class="loading" id="loading">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <h3>ورود به حساب کاربری</h3>
+        <span>برای ورود آدرس ایمیل و رمز عبور خود را وارد نمایید.</span>
+        <br><br>
+        <md-input-container>
+            <md-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                    <path
+                        d="M40 8H8c-2.21 0-3.98 1.79-3.98 4L4 36c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zm0 8L24 26 8 16v-4l16 10 16-10v4z" />
+                </svg>
+            </md-icon>
+            <label>آدرس ایمیل</label>
+            <input type="email" class="ltr" ng-model="email">
+        </md-input-container>
+        <md-input-container>
+            <md-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                    <path
+                        d="M36 16h-2v-4c0-5.52-4.48-10-10-10S14 6.48 14 12v4h-2c-2.21 0-4 1.79-4 4v20c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4V20c0-2.21-1.79-4-4-4zM24 34c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm6.2-18H17.8v-4c0-3.42 2.78-6.2 6.2-6.2 3.42 0 6.2 2.78 6.2 6.2v4z" />
+                </svg>
+            </md-icon>
+            <label>رمزعبور</label>
+            <input type="password" class="ltr" ng-model="password">
+        </md-input-container>
+        <div class="buttons">
+            <md-button class="md-raised md-primary" ng-click="submit()">ورود</md-button>
+        </div>
+    </div>
+    <div class="background">
+        <img src="./assets/store.svg">
+        <span class="version">
+            پنل محصولات - V1.0 Beta 
+        </span>
+    </div>
+</div>

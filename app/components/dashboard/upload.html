@@ -1,0 +1,13 @@
+<md-bottom-sheet class="md-grid" layout="column">
+    <div class="flex nowrap">
+        <img ng-src="{{image}}" style="width: 250px; height: 250px; margin-left: 100px;">
+        <div class="flex column" style="justify-content: center;">
+            <h3>آیا میخواهید این تصویر را آپلود کنید ؟</h3>
+            <br><br>
+            <div style="direction: ltr;">
+                <md-button class="md-raised md-primary" ng-click="uploadResult(true)">بله</md-button>
+                <md-button ng-click="uploadResult(false)">انصراف</md-button>
+            </div>
+        </div>
+    </div>
+</md-bottom-sheet>

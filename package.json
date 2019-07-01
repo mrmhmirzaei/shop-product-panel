@@ -1,0 +1,40 @@
+{
+    "name": "GhoghnoosIT-Product",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "build": "electron-builder -wl"
+    },
+    "author": {
+        "email": "ghoghnoosit@gmail.com",
+        "name": "Ghoghnoos IT",
+        "url": "https://ghoghnoosit.ir"
+    },
+    "homepage": "https://ghoghnoosit.ir",
+    "license": "ISC",
+    "dependencies": {
+        "@liara/sdk": "^0.2.2",
+        "dotenv": "^8.0.0",
+        "electron-settings": "^3.2.0"
+    },
+    "devDependencies": {
+        "electron-builder": "^20.44.4"
+    },
+    "build": {
+        "icon": "./icon.png",
+        "win": {
+            "target": [
+                "nsis"
+            ],
+            "icon": "./icon.png"
+        },
+        "linux": {
+            "category": "Utility",
+            "icon": "./icon.png",
+            "target": [
+                "deb"
+            ]
+        }
+    }
+}

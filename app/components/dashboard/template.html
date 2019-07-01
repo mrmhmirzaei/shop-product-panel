@@ -1,0 +1,264 @@
+<link rel="stylesheet" href="./components/dashboard/style.css">
+<md-toolbar>
+    <div class="toolbar-content">
+        <span>ققنوس آی تی</span>
+        <md-button class="md-fab" ng-click="logout()">
+            <md-tooltip>خروج از حساب کاربری</md-tooltip>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="24" height="24" viewBox="0 0 48 48">
+                <path
+                    d="M20.17 31.17L23 34l10-10-10-10-2.83 2.83L25.34 22H6v4h19.34l-5.17 5.17zM38 6H10c-2.21 0-4 1.79-4 4v8h4v-8h28v28H10v-8H6v8c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4V10c0-2.21-1.79-4-4-4z" />
+            </svg>
+        </md-button>
+    </div>
+</md-toolbar>
+<div ng-if="products != null">
+    <div class="filter-options">
+        <md-input-container>
+            <label>جستوجو محصول بر اساس نام</label>
+            <input type="text" ng-model="filter['name']" ng-keyup="searchFilter($event)">
+        </md-input-container>
+        <md-input-container>
+            <label>برند سازنده</label>
+            <md-select ng-model="filter['brand']" ng-change="fetchProducts()">
+                <md-option><em>هیچ کدام</em></md-option>
+                <md-option ng-repeat="brand in brands" ng-value="brand['_id']">
+                    {{brand['en']}} - {{brand['fa']}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container>
+            <label>دسته بندی</label>
+            <md-select ng-model="filter['category']" ng-change="fetchProducts()">
+                <md-option><em>هیچ کدام</em></md-option>
+                <md-option ng-repeat="category in categories" ng-value="category['_id']">
+                    {{category['name']}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div ng-if="products.length == 0" style="margin-right: 100px;">
+        <br>
+        <h3>محصولی یافت نشد.</h3>
+        <span>هیچ محصولی تا بحال ثبت نشده است؛ لطفا دوباره تلاش کنید.</span>
+    </div>
+    <div class="products" ng-if="products.length != 0">
+        <div class="product" ng-repeat="product in products">
+            <md-card>
+                <img ng-src="{{product['images']['front']}}" class="md-card-image" alt="{{product['name']}}">
+                <md-card-content>
+                    <h2>{{product['name']}}</h2>
+                    <p><span>دسته بندی</span> :‌ {{product['category']['name']}}</p>
+                    <p><span>برند</span> :‌ {{product['brand']['fa']}} - {{product['brand']['en']}}</p>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" ng-disabled="loading" ng-click="remove($event, product['_id'])">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                            <path
+                                d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4V14H12v24zM38 8h-7l-2-2H19l-2 2h-7v4h28V8z" />
+                        </svg>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-disabled="loading" ng-click="selectProduct(product)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48">
+                            <path
+                                d="M6 34.5V42h7.5l22.13-22.13-7.5-7.5L6 34.5zm35.41-20.41c.78-.78.78-2.05 0-2.83l-4.67-4.67c-.78-.78-2.05-.78-2.83 0l-3.66 3.66 7.5 7.5 3.66-3.66z" />
+                        </svg>
+                    </md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
+    </div>
+</div>
+<div class="fab-button" ng-click="openFabButton(true)">
+    <div class="button flex nowrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" /></svg>
+        <pre>افزودن محصول جدید</pre>
+    </div>
+    <div class="form">
+        <div class="close-button">
+            <md-button class="md-raised md-accent" ng-disabled="loading" ng-click="closeFabButton()">بستن</md-button>
+            <md-button class="md-raised md-primary" ng-disabled="loading" ng-click="submit()" style="margin-right: -10px;">
+                {{data['_id']?'ویرایش':'افزودن'}}</md-button>
+        </div>
+        <div ng-cloak>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="اطلاعات محصول" md-on-select="onTabChange()">
+                    <br>
+                    <div class="flex column">
+                        <div class="flex nowrap">
+                            <md-input-container>
+                                <label>نام محصول</label>
+                                <input ng-model="data['name']">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>برند سازنده</label>
+                                <md-select ng-model="brandID">
+                                    <md-option><em>هیچ کدام</em></md-option>
+                                    <md-option ng-repeat="brand in brands" ng-value="brand['_id']">
+                                        {{brand['en']}} - {{brand['fa']}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container>
+                                <label>دسته بندی</label>
+                                <md-select ng-model="categoryID">
+                                    <md-option><em>هیچ کدام</em></md-option>
+                                    <md-option ng-repeat="category in categories" ng-value="category['_id']">
+                                        {{category['name']}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="flex nowrap">
+                            <md-chips ng-model="data['keywords']" name="keywords" md-removable="ture" placeholder="کلمات کلیدی محصول">
+                                <md-chip-template>
+                                    <span style="padding-left: 20px">{{$chip}}</span>
+                                </md-chip-template>
+                            </md-chips>
+                            <md-input-container>
+                                <label>شرح محصول</label>
+                                <textarea rows="3" ng-model="data['descriptions']"></textarea>
+                                <span>توضیحاتی درباره محصول</span>
+                            </md-input-container>
+                        </div>
+                        <br>
+                        <div class="flex column">
+                            <div class="flex nowrap">
+                                <md-input-container>
+                                    <label>متن درباره نقاط محصول</label>
+                                    <input ng-model="feature">
+                                </md-input-container>
+                                <md-button style="height: 40px; margin-top: 10px;" class="md-raised md-primary" ng-click="addFeature('good')">افزودن به نقاط مثبت</md-button>
+                                <md-button style="height: 40px; margin-top: 10px;" class="md-raised md-primary" ng-click="addFeature('bad')">افزودن به نقاط منفی</md-button>
+                            </div>
+
+                            <div class="flex nowrap">
+                                <div class="flex column options">
+                                    <span class="name">نقاط مثبت محصول</span>
+                                    <div ng-repeat="good in data['features']['good']">
+                                        <div class="flex nowrap border">
+                                            <span>{{$index+1}}</span>
+                                            <p>{{good}}</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" ng-click="removeFeature('good', $index)" viewBox="0 0 48 48">
+                                                <path
+                                                    d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex column options">
+                                    <span class="name">نقاط منفی محصول</span>
+                                    <div ng-repeat="bad in data['features']['bad']">
+                                        <div class="flex nowrap border">
+                                            <span>{{$index+1}}</span>
+                                            <p>{{bad}}</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" ng-click="removeFeature('bad', $index)" viewBox="0 0 48 48">
+                                                <path
+                                                    d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <md-input-container>
+                            <label>وزن محصول</label>
+                            <input type="tel" ng-model="data['box']['weight']">
+                            <span>گرم</span>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>طول محصول</label>
+                            <input type="tel" ng-model="data['box']['length']">
+                            <span>سانتی متر</span>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>عرض محصول</label>
+                            <input type="tel" ng-model="data['box']['width']">
+                            <span>سانتی متر</span>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>ارتفاع محصول</label>
+                            <input type="tel" ng-model="data['box']['height']">
+                            <span>سانتی متر</span>
+                        </md-input-container>
+                    </div>
+                    <br><br><br>
+                </md-tab>
+                <md-tab label="بارگذاری تصویر" md-on-select="onTabChange()">
+                    <div class="flex column">
+                        <div class="flex nowrap main">
+                            <div class="image">
+                                <img ng-click="setImage('front')" ng-src="{{data['images']['front']}}">
+                                <div class="flex column">
+                                    <h4>تصویر جلوی محصول</h4>
+                                    <p>
+                                        تصویر جلوی محصول که تصویر اصلی محصول است که کاربر آن را خواهد دید.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="image">
+                                <img ng-click="setImage('back')" ng-src="{{data['images']['back']}}">
+                                <div class="flex column">
+                                    <h4>تصویر پشت محصول</h4>
+                                    <p>
+                                        تصویر پشت محصول که وقتی کاربر موس خود را بر روی تصویر جلوی محصول ببرد، تصویر پشت محصول نمایان می گردد.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex sub">
+                            <div class="image" ng-repeat="image in data['images']['gallary']">
+                                <img ng-src="{{image}}" ng-click="setImage($index)">
+                            </div>
+                            <div class="add" ng-click="setImage(-1)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" /></svg>
+                                <span>افزودن تصویر جدید</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                </md-tab>
+                <md-tab label="مشخصات محصول" md-on-select="onTabChange()">
+                    <br>
+                    <div class="flex column">
+                        <div ng-repeat="specification in specifications track by $index" ng-init="i = $index">
+                            <div class="flex column options">
+                                <span class="name">{{specification['name']}}</span>
+                                <br>
+                                <div ng-repeat="option in specification['options'] track by $index" ng-init="j = $index">
+                                    <div class="flex nowrap option">
+                                        <span class="name">{{option['name']}}</span>
+                                        <md-chips ng-model="data['specifications'][i]['options'][j]['values']" readonly="false" md-removable="true" placeholder="وارد کردن مقادیر">
+                                            <md-chip-template>
+                                                <span>{{$chip}}</span>
+                                            </md-chip-template>
+                                        </md-chips>
+                                        <div class="flex column">
+                                            <span style="margin-top: -10px; margin-bottom: 10px;">مقادیر پیش فرض</span>
+                                            <div class="flex nowrap">
+                                                <div ng-repeat="value in option['values']">
+                                                    <div class="chip" ng-click="selectOption(value, i, j)">{{value}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex nowrap options">
+                            <span class="name">انتخاب گروه مشخصه ها</span>
+                            <md-input-container>
+                                <label>انتخاب گروه مشخصه</label>
+                                <md-select ng-model="size">
+                                    <md-option ng-repeat="optionGroup in optionsGroup" ng-value="" ng-click="addOptionGroup(optionGroup)">{{optionGroup['name']}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </div>
+    </div>
+</div>
